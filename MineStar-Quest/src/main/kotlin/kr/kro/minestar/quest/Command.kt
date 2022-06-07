@@ -1,10 +1,9 @@
-package kr.kro.minestar.pack
+package kr.kro.minestar.quest
 
-import kr.kro.minestar.pack.Main.Companion.prefix
+import kr.kro.minestar.quest.Main.Companion.prefix
 import kr.kro.minestar.utility.command.Argument
 import kr.kro.minestar.utility.command.FunctionalCommand
 import kr.kro.minestar.utility.string.toPlayer
-import kr.kro.minestar.utility.unit.setFalse
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender

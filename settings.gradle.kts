@@ -1,3 +1,2 @@
-rootProject.name = "MineCraftDefaultProject"
-include("MineStar-Plugin")
-include("MineStar-Plugin-API")
+rootProject.name = "System-Quest"
+include("MineStar-Quest")
