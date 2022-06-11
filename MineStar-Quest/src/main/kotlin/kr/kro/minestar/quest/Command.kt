@@ -1,12 +1,11 @@
 package kr.kro.minestar.quest
 
 import kr.kro.minestar.quest.Main.Companion.prefix
-import kr.kro.minestar.quest.data.compensation.Compensation
 import kr.kro.minestar.quest.data.compensation.ItemCompensation
 import kr.kro.minestar.quest.data.contents.hunt.DefaultHuntContent
 import kr.kro.minestar.quest.data.quest.DefaultQuest
 import kr.kro.minestar.quest.data.requirement.ItemRequirement
-import kr.kro.minestar.quest.functions.TestClass
+import kr.kro.minestar.quest.test.TestClass
 import kr.kro.minestar.utility.command.Argument
 import kr.kro.minestar.utility.command.FunctionalCommand
 import kr.kro.minestar.utility.item.amount
@@ -73,7 +72,8 @@ object Command : FunctionalCommand {
                 quest.save()
             }
 
-            OpArg.test -> {TestClass
+            OpArg.test -> {
+                TestClass
             }
         }
         return

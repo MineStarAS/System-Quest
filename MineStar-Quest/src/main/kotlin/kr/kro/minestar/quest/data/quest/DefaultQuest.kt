@@ -41,7 +41,7 @@ class DefaultQuest : Quest() {
                     println("§a$s0")
                     println("§b$s1")
                     println("§c$s2")
-                    TODO("yaml가 너무했어")
+                    //TODO("yaml이 날 억까해")
                 }
             }
             loadQuest(questFolder)

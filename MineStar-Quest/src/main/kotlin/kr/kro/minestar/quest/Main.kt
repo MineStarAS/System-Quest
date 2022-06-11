@@ -1,8 +1,7 @@
 package kr.kro.minestar.quest
 
 import kr.kro.minestar.quest.data.quest.DefaultQuest
-import kr.kro.minestar.quest.functions.Test
-import kr.kro.minestar.quest.functions.TestClass
+import kr.kro.minestar.quest.test.TestClass
 import kr.kro.minestar.quest.functions.YamlRegisterClass
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -18,6 +17,7 @@ class Main : JavaPlugin() {
         getCommand("quest")?.setExecutor(Command)
 
         YamlRegisterClass
+        TestClass
 
         DefaultQuest.loadQuests()
     }
