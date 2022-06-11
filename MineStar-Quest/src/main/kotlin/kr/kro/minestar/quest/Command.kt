@@ -1,22 +1,32 @@
 package kr.kro.minestar.quest
 
 import kr.kro.minestar.quest.Main.Companion.prefix
+import kr.kro.minestar.quest.data.compensation.Compensation
+import kr.kro.minestar.quest.data.compensation.ItemCompensation
+import kr.kro.minestar.quest.data.contents.hunt.DefaultHuntContent
+import kr.kro.minestar.quest.data.quest.DefaultQuest
+import kr.kro.minestar.quest.data.requirement.ItemRequirement
+import kr.kro.minestar.quest.functions.TestClass
 import kr.kro.minestar.utility.command.Argument
 import kr.kro.minestar.utility.command.FunctionalCommand
+import kr.kro.minestar.utility.item.amount
+import kr.kro.minestar.utility.item.display
+import kr.kro.minestar.utility.material.item
 import kr.kro.minestar.utility.string.toPlayer
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 object Command : FunctionalCommand {
     private enum class Arg(override val howToUse: String) : Argument {
-        cmd1("[create/remove]"),
-        cmd2("[create/remove] <PlayerName>"),
-        cmd3("[create/remove] <PlayerName> {Amount}"),
+
     }
 
     private enum class OpArg(override val howToUse: String) : Argument {
+        create(""),
+
         test(""),
     }
 
@@ -30,11 +40,41 @@ object Command : FunctionalCommand {
         if (!arg.isValid(args)) return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
 
         when (arg) {
-            Arg.cmd1 -> {}
-            Arg.cmd2 -> {}
-            Arg.cmd3 -> {}
+            OpArg.create -> {
+                val quest = DefaultQuest()
+                quest.questName = "테스또 퀘스또"
+                quest.questNpcName = "빠뿌라빠뿌"
+                quest.requirement = listOf(
+                    ItemRequirement(Material.DIAMOND.item().display("조은 디아몬도"))
+                )
+                quest.questScript = listOf(
+                    "나는야 빠뿌라빠뿌",
+                    "널 삐빠라삐삐뿌 해주지!"
+                )
+                quest.questScriptSummary = listOf("당신을 삐빠라삐삐뿌 하려고 합니다.")
 
-            OpArg.test -> {}
+                quest.questContent = listOf(
+                    DefaultHuntContent("삐삐뿌?", 11),
+                    DefaultHuntContent("삐삐뿌뽀!", 22),
+                )
+
+                quest.compensationScript = listOf(
+                    "넌 이제 삐빠라삐삐뿌 됬어!",
+                    "나에게 고마워 하도록!"
+                )
+
+                quest.compensations = listOf(
+                    ItemCompensation(listOf(
+                        Material.DIAMOND.item().amount(33),
+                        Material.EMERALD.item().amount(44),
+                    ))
+                )
+
+                quest.save()
+            }
+
+            OpArg.test -> {TestClass
+            }
         }
         return
     }
@@ -62,18 +102,6 @@ object Command : FunctionalCommand {
             Arg.values().add()
             if (player.isOp) OpArg.values().add()
         } else when (arg) {
-            Arg.cmd1 -> when (lastIndex) {
-                1 -> arg.argList(lastIndex).add()
-            }
-            Arg.cmd2 -> when (lastIndex) {
-                1 -> arg.argList(lastIndex).add()
-                2 -> playerAdd()
-            }
-            Arg.cmd3 -> when (lastIndex) {
-                1 -> arg.argList(lastIndex).add()
-                2 -> playerAdd()
-                3 -> if (last.isEmpty()) list.add(arg.argElement(args))
-            }
 
             OpArg.test -> {}
         }

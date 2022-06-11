@@ -12,9 +12,11 @@ object TestClass {
     val yaml = YamlConfiguration().apply {
         this["test"] = Test()
         save(yamlFile)
+    }
 
+    val y = YamlConfiguration.loadConfiguration(yamlFile).apply {
         val get = getSerializable("test", Test::class.java)
 
-        Bukkit.broadcastMessage(get.toString())
+        Bukkit.broadcastMessage("§c" + get.toString())
     }
 }

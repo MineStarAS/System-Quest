@@ -1,62 +1,56 @@
 package kr.kro.minestar.quest.data.quest
 
-import kr.kro.minestar.quest.Main.Companion.pl
-import kr.kro.minestar.quest.data.acceptance.condition.Condition
 import kr.kro.minestar.quest.data.compensation.Compensation
 import kr.kro.minestar.quest.data.contents.Content
+import kr.kro.minestar.quest.data.requirement.Requirement
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import java.io.File
 
-@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-abstract class Quest(open val questName: String) : ConfigurationSerializable {
-    companion object {
-        private val questSet = hashSetOf<Quest>()
+abstract class Quest : ConfigurationSerializable {
 
-        private val questFolder = File(pl.dataFolder, "quest")
+    abstract val questName: String
+    abstract val questNpcName: String
 
-        fun loadQuests() {
-            questSet.clear()
-            fun loadQuest(folder: File) {
-                val fileList = questFolder.listFiles().toList()
+    abstract val requirement: List<Requirement>
 
-                for (file in fileList) {
-                    if (file.isDirectory) loadQuest(file)
-                    if (!file.name.contains(".yml")) continue
+    abstract val questScript: List<String>
+    abstract val questScriptSummary: List<String>
 
-                    val yaml = YamlConfiguration.loadConfiguration(file)
-                    val quest = yaml.getQuest() ?: continue
+    abstract val questContent: List<Content>
 
-                    questSet.add(quest)
-                }
-            }
-            loadQuest(questFolder)
-        }
+    abstract val compensationScript: List<String>
+    abstract val compensations: List<Compensation>
 
-        private fun YamlConfiguration.getQuest() = getSerializable("quest", Quest::class.java)
+    /**
+     * File function
+     */
+    abstract var folderPath: String
+    fun folderPath(file: File): Boolean {
+        if (!file.isDirectory) return false
+        folderPath = file.path
+        return true
     }
 
-    protected abstract var questNpcName: String
-    protected abstract var conditions: List<Condition>
-
-    protected abstract var questScript: List<String>
-    protected abstract var questScriptSummary: List<String>
-
-    protected abstract var questContent: List<Content>
-
-    protected abstract var compensationScript: List<String>
-    protected abstract var compensations: List<Compensation>
+    fun save() {
+        val file = File(folderPath, "$questName.yml")
+        val yaml = YamlConfiguration()
+        yaml["quest"] = this
+        yaml.save(file)
+    }
 
     override fun serialize(): Map<String, Any> {
         val map = HashMap<String, Any>()
         map["questName"] = questName
         map["questNpcName"] = questNpcName
-        map["conditions"] = conditions
+        map["requirement"] = requirement
         map["questScript"] = questScript
         map["questScriptSummary"] = questScriptSummary
         map["questContent"] = questContent
         map["compensationScript"] = compensationScript
         map["compensation"] = compensations
+
+        map["folderPath"] = folderPath
         return map
     }
 }

@@ -17,11 +17,7 @@ class ItemCompensation(val items: List<ItemStack>) : Compensation {
 
     override fun serialize(): MutableMap<String, Any> {
         val map = super.serialize()
-        map
+        map["items"] = items
         return map
-    }
-
-    fun test(yaml: YamlConfiguration) {
-
     }
 }
