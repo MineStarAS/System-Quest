@@ -1,7 +1,0 @@
-name: MineStar-Quest
-version: 1.0.0
-main: kr.kro.minestar.quest.Main
-api-version: 1.18
-authors: [ MineStar ]
-commands:
-  quest:
