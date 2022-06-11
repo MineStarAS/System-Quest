@@ -3,16 +3,13 @@ package kr.kro.minestar.quest.data.quest
 import kr.kro.minestar.quest.Main.Companion.pl
 import kr.kro.minestar.quest.data.compensation.Compensation
 import kr.kro.minestar.quest.data.contents.Content
-import kr.kro.minestar.quest.data.contents.hunt.DefaultHuntContent
 import kr.kro.minestar.quest.data.requirement.Requirement
 import kr.kro.minestar.quest.functions.UtilityClass
-import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.inventory.ItemStack
 import java.io.File
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class DefaultQuest : Quest() {
+class DefaultQuest : Quest {
 
     companion object {
         private val questSet = hashSetOf<Quest>()
@@ -22,7 +19,8 @@ class DefaultQuest : Quest() {
         fun loadQuests() {
             questSet.clear()
             fun loadQuest(folder: File) {
-                val fileList = folder.listFiles().toList()
+                if (!folder.exists()) folder.mkdir()
+                val fileList = folder.listFiles()
 
                 for (file in fileList) {
                     if (file.isDirectory) loadQuest(file)
@@ -32,40 +30,56 @@ class DefaultQuest : Quest() {
                     val quest = yaml.getSerializable("quest", Quest::class.java)
                     val s0 = quest?.questName ?: "QuestNull"
 
-                    val con = yaml.getObject("test1", DefaultHuntContent::class.java)
-                    val s1 = con?.entityName ?: "ContentNull"
-
-                    val item = yaml.getObject("test2", ItemStack::class.java)
-                    val s2 = item?.type?.name ?: "ItemNull"
-
                     println("§a$s0")
-                    println("§b$s1")
-                    println("§c$s2")
-                    //TODO("yaml이 날 억까해")
                 }
             }
             loadQuest(questFolder)
         }
-
-        private fun YamlConfiguration.getQuest() = getSerializable("quest", Quest::class.java)
     }
 
+    override var questName: String = UtilityClass.date()
+    override var questNpcName: String = "nullNpc"
 
-    /**
-     * Field and Field function
-     */
-    override var questName = UtilityClass.date()
-    override var questNpcName = "nullNpc"
-    override var requirement = listOf<Requirement>()
-    override var questScript = listOf<String>()
-    override var questScriptSummary = listOf<String>()
-    override var questContent = listOf<Content>()
-    override var compensationScript = listOf<String>()
-    override var compensations = listOf<Compensation>()
-    override var folderPath = File(pl.dataFolder, "quest").path!!
+    override var requirement: List<Requirement> = listOf()
 
-    init {
+    override var questScript: List<String> = listOf()
+    override var questScriptSummary: List<String> = listOf()
+
+    override var questContent: List<Content> = listOf()
+
+    override var compensationScript: List<String> = listOf()
+    override var compensations: List<Compensation> = listOf()
+
+    override var folderPath: String = File(pl.dataFolder, "quest").path
+
+    constructor()
+
+    constructor(serialize: Map<String, Any>) {
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        questNpcName = if (serialize.containsKey("questNpcName")) serialize["questNpcName"] as String
+        else ""
+        requirement = if (serialize.containsKey("requirement")) serialize["requirement"] as List<Requirement>
+        else listOf()
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        questName = if (serialize.containsKey("questName")) serialize["questName"] as String
+        else ""
+        folderPath = if (serialize.containsKey("folderPath")) serialize["folderPath"] as String
+        else ""
+
+        requirement = serialize["requirement"] as List<Requirement>
+        questScript = serialize["questScript"] as List<String>
+        questScriptSummary = serialize["questScriptSummary"] as List<String>
+        questContent = serialize["questContent"] as List<Content>
+        compensationScript = serialize["compensationScript"] as List<String>
+
         questSet.add(this)
-        println("§c$questName")
     }
 }

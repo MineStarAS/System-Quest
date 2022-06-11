@@ -63,10 +63,7 @@ object Command : FunctionalCommand {
                 )
 
                 quest.compensations = listOf(
-                    ItemCompensation(listOf(
-                        Material.DIAMOND.item().amount(33),
-                        Material.EMERALD.item().amount(44),
-                    ))
+                    ItemCompensation(Material.DIAMOND.item().amount(33))
                 )
 
                 quest.save()
@@ -91,9 +88,11 @@ object Command : FunctionalCommand {
         fun List<String>.add() {
             for (s in this) if (s.contains(last)) list.add(s)
         }
+
         fun Array<out Argument>.add() {
             for (s in this) if (s.name.contains(last)) list.add(s.name)
         }
+
         fun playerAdd() {
             for (s in Bukkit.getOnlinePlayers()) if (s.name.contains(last)) list.add(s.name)
         }

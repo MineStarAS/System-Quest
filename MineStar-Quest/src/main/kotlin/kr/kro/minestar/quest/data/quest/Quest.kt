@@ -7,32 +7,24 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import java.io.File
 
-abstract class Quest : ConfigurationSerializable {
+interface Quest : ConfigurationSerializable {
 
-    abstract val questName: String
-    abstract val questNpcName: String
+    val questName: String
+    val questNpcName: String
 
-    abstract val requirement: List<Requirement>
+    val requirement: List<Requirement>
 
-    abstract val questScript: List<String>
-    abstract val questScriptSummary: List<String>
+    val questScript: List<String>
+    val questScriptSummary: List<String>
 
-    abstract val questContent: List<Content>
+    val questContent: List<Content>
 
-    abstract val compensationScript: List<String>
-    abstract val compensations: List<Compensation>
+    val compensationScript: List<String>
+    val compensations: List<Compensation>
 
-    /**
-     * File function
-     */
-    abstract var folderPath: String
-    fun folderPath(file: File): Boolean {
-        if (!file.isDirectory) return false
-        folderPath = file.path
-        return true
-    }
+    val folderPath: String
 
-    fun save() {
+     fun save() {
         val file = File(folderPath, "$questName.yml")
         val yaml = YamlConfiguration()
         yaml["quest"] = this

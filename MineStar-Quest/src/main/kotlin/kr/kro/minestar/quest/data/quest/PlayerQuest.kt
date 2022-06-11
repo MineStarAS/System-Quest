@@ -1,24 +1,47 @@
 package kr.kro.minestar.quest.data.quest
 
 import kr.kro.minestar.quest.Main
-import kr.kro.minestar.quest.data.requirement.Requirement
 import kr.kro.minestar.quest.data.compensation.Compensation
 import kr.kro.minestar.quest.data.contents.Content
+import kr.kro.minestar.quest.data.requirement.Requirement
 import org.bukkit.entity.Player
 import java.io.File
 
-class PlayerQuest(player: Player, defaultQuest: DefaultQuest) : Quest() {
-    override val questName = defaultQuest.questName
-    override val questNpcName = defaultQuest.questNpcName
+class PlayerQuest : Quest {
+    val player: Player
+    override var questName: String
+    override var questNpcName: String
+    override var requirement: List<Requirement>
+    override var questScript: List<String>
+    override var questScriptSummary: List<String>
+    override var questContent: List<Content>
+    override var compensationScript: List<String>
+    override var compensations: List<Compensation>
+    override var folderPath: String
 
-    override val requirement = defaultQuest.requirement
+    constructor(player: Player, defaultQuest: DefaultQuest) {
+        this.player = player
+        questName = defaultQuest.questName
+        questNpcName = defaultQuest.questNpcName
+        requirement = defaultQuest.requirement
+        questScript = defaultQuest.questScript
+        questScriptSummary = defaultQuest.questScriptSummary
+        questContent = defaultQuest.questContent
+        compensationScript = defaultQuest.compensationScript
+        compensations = defaultQuest.compensations
+        folderPath = File(Main.pl.dataFolder, "player/${player.uniqueId}.yml").path!!
+    }
 
-    override val questScript = defaultQuest.questScript
-    override val questScriptSummary = defaultQuest.questScriptSummary
-
-    override val questContent = defaultQuest.questContent
-
-    override val compensationScript = defaultQuest.compensationScript
-    override val compensations = defaultQuest.compensations
-    override var folderPath = File(Main.pl.dataFolder, "player/${player.uniqueId}.yml").path!!
+    constructor(serialize: Map<String, Any>) {
+        player = serialize["player"] as Player
+        questName = serialize["questName"] as String
+        questNpcName = serialize["questNpcName"] as String
+        requirement = serialize["requirement"] as List<Requirement>
+        questScript = serialize["questScript"] as List<String>
+        questScriptSummary = serialize["questScriptSummary"] as List<String>
+        questContent = serialize["questContent"] as List<Content>
+        compensationScript = serialize["compensationScript"] as List<String>
+        compensations = serialize["compensations"] as List<Compensation>
+        folderPath = serialize["folderPath"] as String
+    }
 }

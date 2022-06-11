@@ -1,7 +1,6 @@
 package kr.kro.minestar.quest.data.contents.item
 
 import kr.kro.minestar.quest.data.contents.Content
-import kr.kro.minestar.quest.data.contents.hunt.PlayerHuntContent
 import kr.kro.minestar.quest.data.contents.type.DefaultType
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

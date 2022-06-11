@@ -12,26 +12,39 @@ import kr.kro.minestar.quest.data.quest.PlayerQuest
 import kr.kro.minestar.quest.data.quest.Quest
 import kr.kro.minestar.quest.data.requirement.ItemRequirement
 import kr.kro.minestar.quest.data.requirement.Requirement
+import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.configuration.serialization.ConfigurationSerialization
+import kotlin.reflect.KClass
 
 object YamlRegisterClass {
+
+    fun registerClass(clazz: KClass<out ConfigurationSerializable>) = ConfigurationSerialization.registerClass(clazz.java)
+    fun registerClass(clazz: Class<out ConfigurationSerializable>) = ConfigurationSerialization.registerClass(clazz)
+
     init {
-        ConfigurationSerialization.registerClass(Compensation::class.java)
-        ConfigurationSerialization.registerClass(ItemCompensation::class.java)
+        //Requirement
+        registerClass(Requirement::class)
 
-        ConfigurationSerialization.registerClass(DefaultHuntContent::class.java)
-        ConfigurationSerialization.registerClass(PlayerHuntContent::class.java)
+        registerClass(ItemRequirement::class)
 
-        ConfigurationSerialization.registerClass(DefaultItemContent::class.java)
-        ConfigurationSerialization.registerClass(PlayerItemContent::class.java)
+        //Compensation
+        registerClass(Compensation::class)
 
-        ConfigurationSerialization.registerClass(Content::class.java)
+        registerClass(ItemCompensation::class)
 
-        ConfigurationSerialization.registerClass(DefaultQuest::class.java)
-        ConfigurationSerialization.registerClass(PlayerQuest::class.java)
-        ConfigurationSerialization.registerClass(Quest::class.java)
+        //Content
+        registerClass(Content::class)
 
-        ConfigurationSerialization.registerClass(Requirement::class.java)
-        ConfigurationSerialization.registerClass(ItemRequirement::class.java)
+        registerClass(DefaultHuntContent::class)
+        registerClass(PlayerHuntContent::class)
+        registerClass(DefaultItemContent::class)
+        registerClass(PlayerItemContent::class)
+
+        //Quest
+        registerClass(Quest::class)
+
+        registerClass(DefaultQuest::class)
+        registerClass(PlayerQuest::class)
     }
+
 }
