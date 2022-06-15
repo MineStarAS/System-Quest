@@ -18,6 +18,7 @@ class DefaultQuest : Quest {
 
         fun loadQuests() {
             questSet.clear()
+
             fun loadQuest(folder: File) {
                 if (!folder.exists()) folder.mkdir()
                 val fileList = folder.listFiles()
@@ -27,12 +28,14 @@ class DefaultQuest : Quest {
                     if (!file.name.contains(".yml")) continue
 
                     val yaml = YamlConfiguration.loadConfiguration(file)
+
                     val quest = yaml.getSerializable("quest", Quest::class.java)
                     val s0 = quest?.questName ?: "QuestNull"
 
                     println("§a$s0")
                 }
             }
+
             loadQuest(questFolder)
         }
     }

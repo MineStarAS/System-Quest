@@ -17,6 +17,7 @@ import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.entity.Villager
 
 object Command : FunctionalCommand {
     private enum class Arg(override val howToUse: String) : Argument {
@@ -26,6 +27,7 @@ object Command : FunctionalCommand {
     private enum class OpArg(override val howToUse: String) : Argument {
         create(""),
 
+        summon("<Name>"),
         test(""),
     }
 
@@ -69,6 +71,15 @@ object Command : FunctionalCommand {
                 quest.save()
             }
 
+            OpArg.summon -> {
+                val name = args.last()
+
+                val entity = player.world.spawn(player.location, Villager::class.java)
+                entity.setAI(false)
+                entity.isSilent = true
+                entity.customName = name
+                entity.isCustomNameVisible = true
+            }
             OpArg.test -> {
                 TestClass
             }

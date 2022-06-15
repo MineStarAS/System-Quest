@@ -8,7 +8,7 @@ import kr.kro.minestar.quest.data.contents.hunt.PlayerHuntContent
 import kr.kro.minestar.quest.data.contents.item.DefaultItemContent
 import kr.kro.minestar.quest.data.contents.item.PlayerItemContent
 import kr.kro.minestar.quest.data.quest.DefaultQuest
-import kr.kro.minestar.quest.data.quest.PlayerQuest
+import kr.kro.minestar.quest.data.player.PlayerProgressQuest
 import kr.kro.minestar.quest.data.quest.Quest
 import kr.kro.minestar.quest.data.requirement.ItemRequirement
 import kr.kro.minestar.quest.data.requirement.Requirement
@@ -44,7 +44,7 @@ object YamlRegisterClass {
         registerClass(Quest::class)
 
         registerClass(DefaultQuest::class)
-        registerClass(PlayerQuest::class)
+        registerClass(PlayerProgressQuest::class)
     }
 
 }
