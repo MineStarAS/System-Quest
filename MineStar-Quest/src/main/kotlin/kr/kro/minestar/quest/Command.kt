@@ -7,6 +7,7 @@ import kr.kro.minestar.quest.data.quest.DefaultQuest
 import kr.kro.minestar.quest.data.requirement.ItemRequirement
 import kr.kro.minestar.quest.test.TestClass
 import kr.kro.minestar.utility.command.Argument
+import kr.kro.minestar.utility.command.ArgumentPermission
 import kr.kro.minestar.utility.command.FunctionalCommand
 import kr.kro.minestar.utility.item.amount
 import kr.kro.minestar.utility.item.display
@@ -20,15 +21,15 @@ import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 
 object Command : FunctionalCommand {
-    private enum class Arg(override val howToUse: String) : Argument {
+    private enum class Arg(override val howToUse: String, override val permission: ArgumentPermission) : Argument {
 
     }
 
-    private enum class OpArg(override val howToUse: String) : Argument {
-        create(""),
+    private enum class OpArg(override val howToUse: String, override val permission: ArgumentPermission) : Argument {
+        create("", ArgumentPermission()),
 
-        summon("<Name>"),
-        test(""),
+        summon("<Name>", ArgumentPermission()),
+        test("", ArgumentPermission()),
     }
 
     override fun commanding(player: CommandSender, cmd: Command, label: String, args: Array<out String>) {
